@@ -19,11 +19,13 @@ exchange = ccxt.binanceus({
   }
 })
 
-symbol = 'ETH/USD'
+symbol = 'ETH/USDT'
 timeframes = ['5d', '8d', '13d']
 # timeframes = ['7d', '25d', '99d']
 averages = []
-# amount = 0.001 # This is the amount of money I am using in USD
+amount = -1 # This is the amount of money I am using in USD
+money = 500
+curPrice = -1
 
 ###### * sums closing prices of the past x days
 def calcMovingAvg(days):
@@ -72,8 +74,25 @@ def testSell():
     orderSell = exchange.createMarketSellOrder(symbol, 0.01, params = {})
     print('sell order: \n' + orderSell)
 
-testBuy()
+# testBuy()
 
-time.sleep(10)
+# time.sleep(10)
 
-testSell()
+# testSell()
+
+def getPrice():
+  orderbook = exchange.fetchOrderBook(symbol)
+  bid = orderbook['bids'][0][0] if len (orderbook['bids']) > 0 else None
+  ask = orderbook['asks'][0][0] if len (orderbook['asks']) > 0 else None
+  spread = (ask - bid) if (bid and ask) else None
+  curPrice = bid
+  print (exchange.id, 'market price', { 'bid': bid, 'ask': ask, 'spread': spread })
+
+def calcBuyingAmount():
+  print('calculating amount to buy now')
+  amount = money / curPrice
+  print(amount)
+
+getPrice()
+calcBuyingAmount()
+# testSell()
