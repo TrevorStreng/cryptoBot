@@ -20,34 +20,50 @@ exchange = ccxt.binanceus({
 })
 
 symbol = 'ETH/USDT'
-timeframes = ['5d', '8d', '13d']
+timeframes = [5, 8, 13] # must be in order
 # timeframes = ['7d', '25d', '99d']
 averages = []
 amount = -1 # This is the amount of money I am using in USD
 money = 49.87
 curPrice = -1
+closes = []
 
 ###### * sums closing prices of the past x days
-def calcMovingAvg(days):
+def calcAvg():
+  global closes
+  global averages
+  global timeframes
   total = 0
-  for i in days:
-    total += i[4]
-  total /= len(days)
-  return total
+  i = 0
+  for x in closes:
+    total += x[1] # & temp
+    # total += x
+    if x == timeframes[i]:
+      averages.push(total / timeframes[i])
+      # if i == len(timeframes)-1:
+      #   break ####### ! this shouldn't be needed because closes should only be the length of the last timeframe
+      i += 1
+  print(averages)
+    
 
 
-def start(timeframe):
-  # global averages
-  days = exchange.fetchOHLCV(symbol, '1d')
-  print(days)
-  # ! calcMovingAvg(days)
-  # averages.push(days)
+
+
+def start():
+  global closes
+  global timeframs
+  days = exchange.fetchOHLCV(symbol, '1d') # this returns a lot of days
+  # print(days)
+  i = 0
+  total = 0
+  closes = [[day[0], day[4]] for day in days[-timeframes[(len(timeframes)-1)]:]]
+  print(closes)
+
 
 
 def init():
   bought = False
-  for x in timeframes:
-    start(x)
+  start()
   # if not bought and averages[0] > averages[2] and averages[1] > averages[2]:
   #   if exchange.has['createMarketOrder']:
   #     exchange.createMarketBuyOrder(symbol, amount, params = {})
@@ -97,7 +113,7 @@ def getPrice():
   # amount = round(amount, 2)
   # print(amount)
   # testSell()
-  testBuy()
+  # testBuy()
 
 
 # getPrice()
