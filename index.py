@@ -74,6 +74,12 @@ def testSell():
     orderSell = exchange.createMarketSellOrder(symbol, 0.01, params = {})
     print('sell order: \n' + orderSell)
 
+def testCandles(timeframe):
+  days = exchange.fetchOHLCV(symbol, timeframe)
+  print(days)
+
+testCandles('1d')
+
 # testBuy()
 
 # time.sleep(10)
