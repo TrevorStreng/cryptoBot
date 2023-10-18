@@ -35,15 +35,15 @@ def calcAvg():
   global timeframes
   total = 0
   i = 0
-  for x in closes:
-    total += x[1] # & temp
-    # total += x
-    if x == timeframes[i]:
-      averages.push(total / timeframes[i])
-      # if i == len(timeframes)-1:
-      #   break ####### ! this shouldn't be needed because closes should only be the length of the last timeframe
+  cnt = 1
+  for x in reversed(closes):
+    total += x
+    print(timeframes, x)
+    if cnt == timeframes[i]:
+      print(cnt)
+      averages.append(total / timeframes[i])
       i += 1
-  print(averages)
+    cnt += 1
     
 
 
@@ -53,29 +53,31 @@ def start():
   global closes
   global timeframs
   days = exchange.fetchOHLCV(symbol, '1d') # this returns a lot of days
-  # print(days)
   i = 0
   total = 0
-  closes = [[day[0], day[4]] for day in days[-timeframes[(len(timeframes)-1)]:]]
+  closes = [day[4] for day in days[-timeframes[(len(timeframes)-1)]:]]
   print(closes)
+  calcAvg()
 
 
 
 def init():
   bought = False
   start()
-  # if not bought and averages[0] > averages[2] and averages[1] > averages[2]:
-  #   if exchange.has['createMarketOrder']:
-  #     exchange.createMarketBuyOrder(symbol, amount, params = {})
-  #     bought = True
-  # if bought and averages[0] < averages[2] and averages[1] < averages[2]:
-  #     # !need to get amount avialable
-  #   if exchange.has['createMarketOrder']:
-  #     order = exchange.createMarketSellOrder(symbol, params = {})
-  #     print(order)
-  #     amount = order.amount
-  #     print(amount)
-  #     bought = False
+  if not bought and averages[0] > averages[2] and averages[1] > averages[2]:
+    if exchange.has['createMarketOrder']:
+      # exchange.createMarketBuyOrder(symbol, amount, params = {})
+      print('bought')
+      bought = True
+  if bought and averages[0] < averages[2] and averages[1] < averages[2]:
+      # !need to get amount avialable
+    if exchange.has['createMarketOrder']:
+      # order = exchange.createMarketSellOrder(symbol, params = {})
+      # print(order)
+      # amount = order.amount
+      # print(amount)
+      print('sold')
+      bought = False
 
 
 init()
@@ -91,12 +93,6 @@ def testSell():
     print(amount)
     orderSell = exchange.createMarketSellOrder(symbol, amount, params = {'useBnb': True})
     print('sell order: ', orderSell)
-
-def testCandles(timeframe):
-  days = exchange.fetchOHLCV(symbol, timeframe)
-  print(days)
-
-# testCandles('1d')
 
 def getPrice():
   global amount
