@@ -37,31 +37,32 @@ def calcMovingAvg(days):
 
 
 def start(timeframe):
-  days = exchange.fetchOHLCV(symbol, timeframe)
+  # global averages
+  days = exchange.fetchOHLCV(symbol, '1d')
   print(days)
   # ! calcMovingAvg(days)
-  averages.push(days)
+  # averages.push(days)
 
 
 def init():
   bought = False
   for x in timeframes:
     start(x)
-  if not bought and averages[0] > averages[2] and averages[1] > averages[2]:
-    if exchange.has['createMarketOrder']:
-      exchange.createMarketBuyOrder(symbol, amount, params = {})
-      bought = True
-  if bought and averages[0] < averages[2] and averages[1] < averages[2]:
-      # !need to get amount avialable
-    if exchange.has['createMarketOrder']:
-      order = exchange.createMarketSellOrder(symbol, params = {})
-      print(order)
-      amount = order.amount
-      print(amount)
-      bought = False
+  # if not bought and averages[0] > averages[2] and averages[1] > averages[2]:
+  #   if exchange.has['createMarketOrder']:
+  #     exchange.createMarketBuyOrder(symbol, amount, params = {})
+  #     bought = True
+  # if bought and averages[0] < averages[2] and averages[1] < averages[2]:
+  #     # !need to get amount avialable
+  #   if exchange.has['createMarketOrder']:
+  #     order = exchange.createMarketSellOrder(symbol, params = {})
+  #     print(order)
+  #     amount = order.amount
+  #     print(amount)
+  #     bought = False
 
 
-# init()
+init()
 
 def testBuy():
   if exchange.has['createMarketOrder']:
@@ -99,4 +100,4 @@ def getPrice():
   testBuy()
 
 
-getPrice()
+# getPrice()
