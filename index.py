@@ -24,7 +24,7 @@ timeframes = ['5d', '8d', '13d']
 # timeframes = ['7d', '25d', '99d']
 averages = []
 amount = -1 # This is the amount of money I am using in USD
-money = 50
+money = 49.87
 curPrice = -1
 
 ###### * sums closing prices of the past x days
@@ -66,13 +66,14 @@ def init():
 def testBuy():
   if exchange.has['createMarketOrder']:
     orderBuy = exchange.createMarketBuyOrder(symbol, amount, params = {})
-    print('buy order: \n' + orderBuy)
+    print('buy order: ', orderBuy)
 
 
 def testSell():
   if exchange.has['createMarketOrder']:
-    orderSell = exchange.createMarketSellOrder(symbol, amount, params = {})
-    print('sell order: \n' + orderSell)
+    print(amount)
+    orderSell = exchange.createMarketSellOrder(symbol, amount, params = {'useBnb': True})
+    print('sell order: ', orderSell)
 
 def testCandles(timeframe):
   days = exchange.fetchOHLCV(symbol, timeframe)
@@ -80,11 +81,8 @@ def testCandles(timeframe):
 
 # testCandles('1d')
 
-# testBuy()
-
-# time.sleep(10)
-
 def getPrice():
+  global amount
   orderbook = exchange.fetchOrderBook(symbol)
   bid = orderbook['bids'][0][0] if len (orderbook['bids']) > 0 else None
   ask = orderbook['asks'][0][0] if len (orderbook['asks']) > 0 else None
@@ -98,6 +96,7 @@ def getPrice():
   # amount = round(amount, 2)
   # print(amount)
   # testSell()
+  testBuy()
 
 
 getPrice()
