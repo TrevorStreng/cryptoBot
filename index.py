@@ -24,7 +24,7 @@ timeframes = ['5d', '8d', '13d']
 # timeframes = ['7d', '25d', '99d']
 averages = []
 amount = -1 # This is the amount of money I am using in USD
-money = 500
+money = 50
 curPrice = -1
 
 ###### * sums closing prices of the past x days
@@ -65,26 +65,24 @@ def init():
 
 def testBuy():
   if exchange.has['createMarketOrder']:
-    orderBuy = exchange.createMarketBuyOrder(symbol, 0.01, params = {})
+    orderBuy = exchange.createMarketBuyOrder(symbol, amount, params = {})
     print('buy order: \n' + orderBuy)
 
 
 def testSell():
   if exchange.has['createMarketOrder']:
-    orderSell = exchange.createMarketSellOrder(symbol, 0.01, params = {})
+    orderSell = exchange.createMarketSellOrder(symbol, amount, params = {})
     print('sell order: \n' + orderSell)
 
 def testCandles(timeframe):
   days = exchange.fetchOHLCV(symbol, timeframe)
   print(days)
 
-testCandles('1d')
+# testCandles('1d')
 
 # testBuy()
 
 # time.sleep(10)
-
-# testSell()
 
 def getPrice():
   orderbook = exchange.fetchOrderBook(symbol)
@@ -93,12 +91,13 @@ def getPrice():
   spread = (ask - bid) if (bid and ask) else None
   curPrice = bid
   print (exchange.id, 'market price', { 'bid': bid, 'ask': ask, 'spread': spread })
-
-def calcBuyingAmount():
   print('calculating amount to buy now')
+  # ^ Calculating the amount to buy
   amount = money / curPrice
   print(amount)
+  # amount = round(amount, 2)
+  # print(amount)
+  # testSell()
+
 
 getPrice()
-calcBuyingAmount()
-# testSell()
