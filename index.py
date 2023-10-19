@@ -27,6 +27,7 @@ amount = -1 # This is the amount of money I am using in USD
 money = 49.87
 curPrice = -1
 closes = []
+bought = False
 
 ###### * sums closing prices of the past x days
 def calcAvg():
@@ -36,14 +37,16 @@ def calcAvg():
   total = 0
   i = 0
   cnt = 1
+  averages = []
   for x in reversed(closes):
     total += x
-    print(timeframes, x)
+    # print(timeframes, x)
     if cnt == timeframes[i]:
-      print(cnt)
+      # print(cnt)
       averages.append(total / timeframes[i])
       i += 1
     cnt += 1
+  print(averages)
     
 
 
@@ -52,24 +55,26 @@ def calcAvg():
 def start():
   global closes
   global timeframs
-  days = exchange.fetchOHLCV(symbol, '1d') # this returns a lot of days
+  days = exchange.fetchOHLCV(symbol, '1m') # this returns a lot of days
   i = 0
   total = 0
   closes = [day[4] for day in days[-timeframes[(len(timeframes)-1)]:]]
-  print(closes)
+  # print(closes)
   calcAvg()
 
 
 
 def init():
-  bought = False
+  global averages
+  global bought
   start()
   if not bought and averages[0] > averages[2] and averages[1] > averages[2]:
     if exchange.has['createMarketOrder']:
       # exchange.createMarketBuyOrder(symbol, amount, params = {})
       print('bought')
+      print(bought)
       bought = True
-  if bought and averages[0] < averages[2] and averages[1] < averages[2]:
+  elif bought and averages[0] < averages[2] and averages[1] < averages[2]:
       # !need to get amount avialable
     if exchange.has['createMarketOrder']:
       # order = exchange.createMarketSellOrder(symbol, params = {})
@@ -77,10 +82,21 @@ def init():
       # amount = order.amount
       # print(amount)
       print('sold')
+      print(bought)
       bought = False
+  else:
+    print('didnt buy or sell')
 
 
-init()
+timer = 0
+while(True):
+  print('running at time:', timer)
+  init()
+  time.sleep(1 * 60)
+  timer += 1
+  if timer >= 60:
+    break
+
 
 def testBuy():
   if exchange.has['createMarketOrder']:
