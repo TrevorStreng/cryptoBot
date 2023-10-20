@@ -92,8 +92,8 @@ def init():
   else:
     print('didnt buy or sell')
   
-  exchange.fetchBalance(params = {})
-
+  balance = exchange.fetchBalance(params = {})
+  print(balance)
 
 timer = 0
 while(True):
