@@ -93,7 +93,7 @@ def init():
     print('didnt buy or sell')
   
   balance = exchange.fetchBalance(params = {})
-  print(balance)
+  print(balance.get('USDT'))
 
 timer = 0
 while(True):
