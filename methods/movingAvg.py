@@ -1,10 +1,4 @@
-import ccxt
-import time
-
-
-###### * sums closing prices of the past x days
 def calcAvg(timeframes):
-  global closes
   total = 0
   i = 0
   cnt = 1
@@ -30,24 +24,21 @@ def start(exchange, symbol, timeframes):
   # print(closes)
   return calcAvg(timeframes)
 
-def init(exchange, symbol, timeframes):
-  #! global averages
-  global bought
+def initMovAvg(exchange, symbol, timeframes):
   symbols = createSymbols(symbol)
   averages = start(exchange, symbol, timeframes)
   if not bought and averages[0] > averages[2] and averages[1] > averages[2]:
     if exchange.has['createMarketOrder']:
-      # exchange.createMarketBuyOrder(symbol, amount, params = {})
-      # exchange.fetchBalance(params = {})
+      bal0 = getBalance(exchange, symbols[1]) # ^ need to get the amount of usdt to see how much SOL to buy
+      order = exchange.createMarketBuyOrder(symbol, bal0, params = {})
+      print(order)
       print('bought')
       bought = True
   elif bought and averages[0] < averages[2] and averages[1] < averages[2]:
-      # !need to get amount avialable
     if exchange.has['createMarketOrder']:
-      # order = exchange.createMarketSellOrder(symbol, params = {})
-      # print(order)
-      # amount = order.amount
-      # print(amount)
+      bal1 = getBalance(exchange, symbols[0]) # ^ need to get the amount of SOL to see how much to sell
+      order = exchange.createMarketSellOrder(symbol, bal1, params = {})
+      print(order)
       print('sold')
       bought = False
   else:
@@ -57,4 +48,7 @@ def init(exchange, symbol, timeframes):
   # print(balance.get('USDT'))
 
 def createSymbols(symbol):
-  return symbol.split('/') # 'SOL/USDT'
+  return symbol.split('/') # 'SOL/USDT' returns array
+
+def getBalance(exchange, symbol):
+  exchange.fetchBalance(params={}).get(symbol)

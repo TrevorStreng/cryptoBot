@@ -2,7 +2,7 @@ import os
 from dotenv import load_dotenv
 import ccxt
 import time
-from methods.movingAvg import init 
+from methods.movingAvg import initMovAvg 
 
 # TODO
 # 1. get correct amount after trade and keep track of how much capital you have
@@ -36,7 +36,7 @@ bought = False
 timer = 0
 while(True):
   print('running at time:', timer)
-  init(exchange, symbol, timeframes)
+  initMovAvg(exchange, symbol, timeframes)
   time.sleep(1 * 60)
   timer += 1
   if timer >= 60:
