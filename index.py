@@ -4,6 +4,12 @@ import ccxt
 # import pandas as pd
 import time
 
+# TODO
+# 1. get correct amount after trade and keep track of how much capital you have
+# 2. log trades
+# 3. determine if algorithm is performing better than the market
+# 4. look into rsi
+
 load_dotenv()
 
 exchange = ccxt.binanceus({
@@ -19,12 +25,12 @@ exchange = ccxt.binanceus({
   }
 })
 
-symbol = 'ETH/USDT'
+symbol = 'SOL/USDT'
 timeframes = [5, 8, 13] # must be in order
 # timeframes = ['7d', '25d', '99d']
 averages = []
 amount = -1 # This is the amount of money I am using in USD
-money = 49.87
+money = 100.07
 curPrice = -1
 closes = []
 bought = False
@@ -55,7 +61,7 @@ def calcAvg():
 def start():
   global closes
   global timeframs
-  days = exchange.fetchOHLCV(symbol, '1m') # this returns a lot of days
+  days = exchange.fetchOHLCV(symbol, '1m')
   i = 0
   total = 0
   closes = [day[4] for day in days[-timeframes[(len(timeframes)-1)]:]]
@@ -71,8 +77,8 @@ def init():
   if not bought and averages[0] > averages[2] and averages[1] > averages[2]:
     if exchange.has['createMarketOrder']:
       # exchange.createMarketBuyOrder(symbol, amount, params = {})
+      # exchange.fetchBalance(params = {})
       print('bought')
-      print(bought)
       bought = True
   elif bought and averages[0] < averages[2] and averages[1] < averages[2]:
       # !need to get amount avialable
@@ -82,10 +88,11 @@ def init():
       # amount = order.amount
       # print(amount)
       print('sold')
-      print(bought)
       bought = False
   else:
     print('didnt buy or sell')
+  
+  exchange.fetchBalance(params = {})
 
 
 timer = 0
@@ -98,17 +105,17 @@ while(True):
     break
 
 
-def testBuy():
-  if exchange.has['createMarketOrder']:
-    orderBuy = exchange.createMarketBuyOrder(symbol, amount, params = {})
-    print('buy order: ', orderBuy)
+# def testBuy():
+#   if exchange.has['createMarketOrder']:
+#     orderBuy = exchange.createMarketBuyOrder(symbol, amount, params = {})
+#     print('buy order: ', orderBuy)
 
 
-def testSell():
-  if exchange.has['createMarketOrder']:
-    print(amount)
-    orderSell = exchange.createMarketSellOrder(symbol, amount, params = {'useBnb': True})
-    print('sell order: ', orderSell)
+# def testSell():
+#   if exchange.has['createMarketOrder']:
+#     print(amount)
+#     orderSell = exchange.createMarketSellOrder(symbol, amount, params = {'useBnb': True})
+#     print('sell order: ', orderSell)
 
 def getPrice():
   global amount
