@@ -1,6 +1,5 @@
 bought = False
-
-def calcAvg(timeframes):
+def calcAvg(closes, timeframes):
   total = 0
   i = 0
   cnt = 1
@@ -22,9 +21,10 @@ def start(exchange, symbol, timeframes):
   days = exchange.fetchOHLCV(symbol, '1m')
   i = 0
   total = 0
-  closes = [day[4] for day in days[-timeframes[(len(timeframes)-1)]:]]
+  closes = [day[4] for day in days]
+  # closes = [day[4] for day in days[-timeframes[(len(timeframes)-1)]:]]
   # print(closes)
-  return calcAvg(timeframes)
+  return calcAvg(closes, timeframes)
 
 def initMovAvg(exchange, symbol, timeframes):
   global bought
