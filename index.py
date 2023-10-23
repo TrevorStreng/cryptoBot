@@ -8,7 +8,8 @@ from methods.movingAvg import initMovAvg
 # 1. get correct amount after trade and keep track of how much capital you have
 # 2. log trades
 # 3. determine if algorithm is performing better than the market
-# 4. look into rsi
+# 4. Figure out how to make the python script run frequently rathere than running python all the time
+# 5. look into rsi
 
 load_dotenv()
 
@@ -28,9 +29,9 @@ exchange = ccxt.binanceus({
 symbol = 'SOL/USDT'
 timeframes = [5, 8, 13] # must be in order
 # timeframes = ['7d', '25d', '99d']
-amount = -1 # This is the amount of money I am using in USD
-money = 100.07
-curPrice = -1
+# amount = -1 # This is the amount of money I am using in USD
+# money = 100.07
+# curPrice = -1
 bought = False
 
 timer = 0
@@ -53,7 +54,7 @@ def getPrice():
   print (exchange.id, 'market price', { 'bid': bid, 'ask': ask, 'spread': spread })
   print('calculating amount to buy now')
   # ^ Calculating the amount to buy
-  amount = money / curPrice
+  # amount = money / curPrice
   print(amount)
   # amount = round(amount, 2)
   # print(amount)

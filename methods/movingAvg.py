@@ -1,3 +1,5 @@
+bought = False
+
 def calcAvg(timeframes):
   total = 0
   i = 0
@@ -25,18 +27,20 @@ def start(exchange, symbol, timeframes):
   return calcAvg(timeframes)
 
 def initMovAvg(exchange, symbol, timeframes):
+  global bought
   symbols = createSymbols(symbol)
   averages = start(exchange, symbol, timeframes)
   if not bought and averages[0] > averages[2] and averages[1] > averages[2]:
     if exchange.has['createMarketOrder']:
       bal0 = getBalance(exchange, symbols[1]) # ^ need to get the amount of usdt to see how much SOL to buy
-      order = exchange.createMarketBuyOrder(symbol, bal0, params = {})
-      print(order)
+      print(bal0) # !!!! this prints none
+      # order = exchange.createMarketBuyOrder(symbol, bal0, params = {})
+      # print(order)
       print('bought')
       bought = True
   elif bought and averages[0] < averages[2] and averages[1] < averages[2]:
     if exchange.has['createMarketOrder']:
-      bal1 = getBalance(exchange, symbols[0]) # ^ need to get the amount of SOL to see how much to sell
+      bal1 = getBalance(exchange, symbols[0]).get(symbols[1]) # ^ need to get the amount of SOL to see how much to sell
       order = exchange.createMarketSellOrder(symbol, bal1, params = {})
       print(order)
       print('sold')
@@ -44,7 +48,7 @@ def initMovAvg(exchange, symbol, timeframes):
   else:
     print('didnt buy or sell')
   
-  balance = exchange.fetchBalance(params = {}).get(symbols[0])
+  # balance = exchange.fetchBalance(params = {}).get(symbols[0])
   # print(balance.get('USDT'))
 
 def createSymbols(symbol):
