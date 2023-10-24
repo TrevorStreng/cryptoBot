@@ -6,22 +6,21 @@ def initMovAvg(exchange, symbol, timeframes):
   symbols = createSymbols(symbol)
   averages = start(exchange, symbol, timeframes)
   # bal = getBalance(exchange, symbols[1])
-  # print(bal)
+  # print(bal.get('free'))
   if not bought and averages[0] > averages[2] and averages[1] > averages[2]:
     if exchange.has['createMarketOrder']:
       bal0 = getBalance(exchange, symbols[1]) # ^ need to get the amount of usdt to see how much SOL to buy
-      print(bal0.free)
-      print(type(bal0.free))
-      # order = exchange.createMarketBuyOrder(symbol, bal0.free, params = {})
-      # print(order)
+      # ! need to calculate the amount of SOL to buy, might be tough with market orders
+
+      # order = exchange.createMarketBuyOrder(symbol, bal0.get('free'), params = {})
+      print(order)
       print('bought')
       bought = True
   elif bought and averages[0] < averages[2] and averages[1] < averages[2]:
     if exchange.has['createMarketOrder']:
       bal1 = getBalance(exchange, symbols[0]).get(symbols[1]) # ^ need to get the amount of SOL to see how much to sell
-      # order = exchange.createMarketSellOrder(symbol, bal1, params = {})
-      print(bal1.free)
-      print(type(bal1.free))
+      # order = exchange.createMarketSellOrder(symbol, bal1.get('free'), params = {})
+      print(order)
       print('sold')
       bought = False
   else:
