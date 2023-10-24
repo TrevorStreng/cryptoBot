@@ -3,12 +3,13 @@ from dotenv import load_dotenv
 import ccxt
 import time
 from methods.movingAvg import initMovAvg 
+import logging
 
 # TODO
 # 1. get correct amount after trade and keep track of how much capital you have
-# 2. log trades
+# 2. log trades and errors
 # 3. determine if algorithm is performing better than the market
-# 4. Figure out how to make the python script run frequently rathere than running python all the time
+# 4. check where funds are to determine if bought or not
 # 5. look into rsi
 
 load_dotenv()
@@ -35,13 +36,17 @@ timeframes = [5, 8, 13] # must be in order
 bought = False
 
 timer = 0
+log_file = 'crypto.log'
+log_level = logging.INFO
+logging.basicConfig(filename=log_file, level=log_level, format="%(asctime)s [%(levelname)s]: %(message)s")
 while(True):
   print('running at time:', timer)
-  initMovAvg(exchange, symbol, timeframes)
+  initMovAvg(exchange, symbol, timeframes, logging)
   time.sleep(1 * 60)
   timer += 1
   if timer >= 60:
     break
+logging.shutdown()
 
 
 def getPrice():
