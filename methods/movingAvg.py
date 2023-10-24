@@ -16,7 +16,7 @@ def calcAvg(closes, timeframes):
   return averages
 
 def start(exchange, symbol, timeframes):
-  global closes
+  # global closes
   global timeframs
   days = exchange.fetchOHLCV(symbol, '1m')
   i = 0
