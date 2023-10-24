@@ -21,15 +21,16 @@ def start(exchange, symbol, timeframes):
   days = exchange.fetchOHLCV(symbol, '1m')
   i = 0
   total = 0
-  closes = [day[4] for day in days]
-  # closes = [day[4] for day in days[-timeframes[(len(timeframes)-1)]:]]
-  # print(closes)
+  closes = [day[4] for day in days[-timeframes[(len(timeframes)-1)]:]]
+  print(closes)
   return calcAvg(closes, timeframes)
 
 def initMovAvg(exchange, symbol, timeframes):
   global bought
   symbols = createSymbols(symbol)
   averages = start(exchange, symbol, timeframes)
+  bal = getBalance(exchange, symbols[1])
+  print(bal)
   if not bought and averages[0] > averages[2] and averages[1] > averages[2]:
     if exchange.has['createMarketOrder']:
       bal0 = getBalance(exchange, symbols[1]) # ^ need to get the amount of usdt to see how much SOL to buy
@@ -41,8 +42,8 @@ def initMovAvg(exchange, symbol, timeframes):
   elif bought and averages[0] < averages[2] and averages[1] < averages[2]:
     if exchange.has['createMarketOrder']:
       bal1 = getBalance(exchange, symbols[0]).get(symbols[1]) # ^ need to get the amount of SOL to see how much to sell
-      order = exchange.createMarketSellOrder(symbol, bal1, params = {})
-      print(order)
+      # order = exchange.createMarketSellOrder(symbol, bal1, params = {})
+      print(bal1)
       print('sold')
       bought = False
   else:
@@ -55,4 +56,4 @@ def createSymbols(symbol):
   return symbol.split('/') # 'SOL/USDT' returns array
 
 def getBalance(exchange, symbol):
-  exchange.fetchBalance(params={}).get(symbol)
+  return exchange.fetchBalance(params={}).get(symbol)
