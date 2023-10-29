@@ -5,6 +5,7 @@ import time
 from methods.movingAvg import initMovAvg 
 from methods.movingAvg import getBalance 
 import logging
+from datetime import date
 
 # TODO
 # 1. get correct amount after trade and keep track of how much capital you have
@@ -38,7 +39,10 @@ log_file = 'crypto.log'
 log_level = logging.INFO
 logging.basicConfig(filename=log_file, level=log_level, format="%(asctime)s [%(levelname)s]: %(message)s")
 def startTrading():
+  # Log day
+  logging.critical('Date: ', date.today())
   bought = checkBought()
+  print(bought)
   while(True):
     print('running at time:', timer)
     initMovAvg(exchange, symbol, timeframes, logging, bought)
@@ -50,3 +54,5 @@ logging.shutdown()
 
 def checkBought():
   return getBalance(exchange, symbol) < 5
+
+startTrading()
