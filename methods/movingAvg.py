@@ -4,12 +4,12 @@ def initMovAvg(exchange, symbol, timeframes, logging, bought):
   averages = start(exchange, symbol, timeframes)
   if not bought and averages[0] > averages[2] and averages[1] > averages[2]:
     if exchange.has['createMarketOrder']:
-      bal = getBalance(exchange, symbols[1]) # ^ need to get the amount of usdt to see how much SOL to buy
+      bal1 = getBalance(exchange, symbols[1]) # ^ need to get the amount of usdt to see how much SOL to buy
       orderbook = exchange.fetch_order_book (symbol)
       print(orderbook)
       ask = orderbook['asks'][0][0] if len (orderbook['asks']) > 0 else None
       print(ask)
-      amount = bal / ask # amount that I want to buy
+      amount = bal1 / ask # amount that I want to buy
       print('amount: ', amount)
       order = exchange.createLimitBuyOrder(symbol, amount, ask, params = {})
       print(order)

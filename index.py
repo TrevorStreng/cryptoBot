@@ -4,6 +4,7 @@ import ccxt
 import time
 from methods.movingAvg import initMovAvg 
 from methods.movingAvg import getBalance 
+from methods.movingAvg import createSymbols 
 import logging
 from datetime import date
 
@@ -40,8 +41,12 @@ log_level = logging.INFO
 logging.basicConfig(filename=log_file, level=log_level, format="%(asctime)s [%(levelname)s]: %(message)s")
 def startTrading():
   # Log day
-  logging.critical('Date: ', date.today())
-  bought = checkBought()
+  print('Date: ', date.today())
+  date = date.today()
+  print('Date: ', date.month, '/', date.day, '/', date.year)
+  logging.critical('Date: ', date.month, '/', date.day, '/', date.year)
+  symbols = createSymbols(symbol)
+  bought = checkBought(symbols[1])
   print(bought)
   while(True):
     print('running at time:', timer)
@@ -52,7 +57,7 @@ def startTrading():
       break
 logging.shutdown()
 
-def checkBought():
-  return getBalance(exchange, symbol) < 5
+def checkBought(symb):
+  return getBalance(exchange, symb) < 5
 
 startTrading()
