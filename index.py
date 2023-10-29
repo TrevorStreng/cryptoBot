@@ -41,9 +41,9 @@ log_level = logging.INFO
 logging.basicConfig(filename=log_file, level=log_level, format="%(asctime)s [%(levelname)s]: %(message)s")
 def startTrading():
   # Log day
-  print('Date: ', date.today())
-  date = date.today()
-  logging.info('Date: %s/%s/%s', date.month, date.day, date.year)
+  global timer
+  dates = date.today()
+  logging.info('Date: %s/%s/%s', dates.month, dates.day, dates.year)
   symbols = createSymbols(symbol)
   bought = checkBought(symbols[1])
   print(bought)
