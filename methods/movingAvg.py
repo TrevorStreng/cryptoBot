@@ -1,32 +1,27 @@
-bought = False
-
 # 1.
-def initMovAvg(exchange, symbol, timeframes, logging):
-  global bought
+def initMovAvg(exchange, symbol, timeframes, logging, bought):
   symbols = createSymbols(symbol)
   averages = start(exchange, symbol, timeframes)
   if not bought and averages[0] > averages[2] and averages[1] > averages[2]:
     if exchange.has['createMarketOrder']:
-      bal0 = getBalance(exchange, symbols[1]) # ^ need to get the amount of usdt to see how much SOL to buy
+      bal = getBalance(exchange, symbols[1]) # ^ need to get the amount of usdt to see how much SOL to buy
       orderbook = exchange.fetch_order_book (symbol)
       print(orderbook)
       ask = orderbook['asks'][0][0] if len (orderbook['asks']) > 0 else None
       print(ask)
-      amount = bal0.get('free') / ask # amount that I want to buy
+      amount = bal / ask # amount that I want to buy
       print('amount: ', amount)
       order = exchange.createLimitBuyOrder(symbol, amount, ask, params = {})
       print(order)
       bought = True
-      print('bought: ', bought)
-      logging.info('Bought: ', order)
+      logging.info('Bought: ', order) # & Make sure to log price and amount bought
   elif bought and averages[0] < averages[2] and averages[1] < averages[2]:
     if exchange.has['createMarketOrder']:
-      bal1 = getBalance(exchange, symbols[0]).get(symbols[1]) # ^ need to get the amount of SOL to see how much to sell
-      # ! need to fix the selling
-      # order = exchange.createMarketSellOrder(symbol, bal1.get('free'), params = {})
-      # print(order)
-      print('bought: ', bought)
+      amount = getBalance(exchange, symbols[0]) # ^ need to get the amount of SOL to see how much to sell
+      order = exchange.createLimitSellOrder(symbol, amount, params = {})
+      print(order)
       bought = False
+      logging.info('Sold: ', order)
   else:
     print('didnt buy or sell')
     logging.info('Nothing happened')
@@ -37,7 +32,9 @@ def createSymbols(symbol):
 
 # 3.
 def getBalance(exchange, symbol):
-  return exchange.fetchBalance(params={}).get(symbol)
+  bal = exchange.fetchBalance(params={}).get(symbol)
+  amount = bal.get('free')
+  return amount
 
 # 4.
 def start(exchange, symbol, timeframes):

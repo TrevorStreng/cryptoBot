@@ -3,6 +3,7 @@ from dotenv import load_dotenv
 import ccxt
 import time
 from methods.movingAvg import initMovAvg 
+from methods.movingAvg import getBalance 
 import logging
 
 # TODO
@@ -30,36 +31,22 @@ exchange = ccxt.binanceus({
 symbol = 'SOL/USDT'
 timeframes = [5, 8, 13] # must be in order
 # timeframes = ['7d', '25d', '99d']
-# amount = -1 # This is the amount of money I am using in USD
-# money = 100.07
-# curPrice = -1
 bought = False
 
 timer = 0
 log_file = 'crypto.log'
 log_level = logging.INFO
 logging.basicConfig(filename=log_file, level=log_level, format="%(asctime)s [%(levelname)s]: %(message)s")
-while(True):
-  print('running at time:', timer)
-  initMovAvg(exchange, symbol, timeframes, logging)
-  time.sleep(1 * 60)
-  timer += 1
-  if timer >= 60:
-    break
+def startTrading():
+  bought = checkBought()
+  while(True):
+    print('running at time:', timer)
+    initMovAvg(exchange, symbol, timeframes, logging, bought)
+    time.sleep(1 * 60)
+    timer += 1
+    if timer >= 60:
+      break
 logging.shutdown()
 
-
-def getPrice():
-  global amount
-  orderbook = exchange.fetchOrderBook(symbol)
-  bid = orderbook['bids'][0][0] if len (orderbook['bids']) > 0 else None
-  ask = orderbook['asks'][0][0] if len (orderbook['asks']) > 0 else None
-  spread = (ask - bid) if (bid and ask) else None
-  curPrice = bid
-  print (exchange.id, 'market price', { 'bid': bid, 'ask': ask, 'spread': spread })
-  print('calculating amount to buy now')
-  # ^ Calculating the amount to buy
-  # amount = money / curPrice
-  print(amount)
-  # amount = round(amount, 2)
-  # print(amount)
+def checkBought():
+  return getBalance(exchange, symbol) < 5
