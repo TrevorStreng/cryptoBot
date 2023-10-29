@@ -43,8 +43,7 @@ def startTrading():
   # Log day
   print('Date: ', date.today())
   date = date.today()
-  print('Date: ', date.month, '/', date.day, '/', date.year)
-  logging.critical('Date: ', date.month, '/', date.day, '/', date.year)
+  logging.info('Date: %s/%s/%s', date.month, date.day, date.year)
   symbols = createSymbols(symbol)
   bought = checkBought(symbols[1])
   print(bought)

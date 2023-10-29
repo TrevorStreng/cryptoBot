@@ -18,7 +18,11 @@ def initMovAvg(exchange, symbol, timeframes, logging, bought):
   elif bought and averages[0] < averages[2] and averages[1] < averages[2]:
     if exchange.has['createMarketOrder']:
       amount = getBalance(exchange, symbols[0]) # ^ need to get the amount of SOL to see how much to sell
-      order = exchange.createLimitSellOrder(symbol, amount, params = {})
+      orderbook = exchange.fetch_order_book (symbol)
+      print(orderbook)
+      bid = orderbook['bids'][0][0] if len (orderbook['bids']) > 0 else None
+      print(bid)
+      order = exchange.createLimitSellOrder(symbol, amount, bid, params = {})
       print(order)
       bought = False
       logging.info('Sold: ', order)
