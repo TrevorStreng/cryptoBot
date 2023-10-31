@@ -1,21 +1,4 @@
 # 1.
-# ! FIX PRECISION ERROR
-# Traceback (most recent call last):
-#   File "index.py", line 62, in <module>
-#     startTrading()
-#   File "index.py", line 52, in startTrading
-#     initMovAvg(exchange, symbol, timeframes, logging, bought)
-#   File "/home/pi/Documents/crypto_bot/cryptoBot/methods/movingAvg.py", line 25, in initMovAvg
-#     order = exchange.createLimitSellOrder(symbol, amount, bid, params = {})
-#   File "/home/pi/.local/lib/python3.7/site-packages/ccxt/base/exchange.py", line 3643, in create_limit_sell_order
-#     return self.create_order(symbol, 'limit', 'sell', amount, price, params)
-#   File "/home/pi/.local/lib/python3.7/site-packages/ccxt/binance.py", line 4174, in create_order
-#     request = self.create_order_request(symbol, type, side, amount, price, params)
-#   File "/home/pi/.local/lib/python3.7/site-packages/ccxt/binance.py", line 4352, in create_order_request
-#     request['quantity'] = self.amount_to_precision(symbol, amount)
-#   File "/home/pi/.local/lib/python3.7/site-packages/ccxt/base/exchange.py", line 3666, in amount_to_precision
-#     raise InvalidOrder(self.id + ' amount of ' + market['symbol'] + ' must be greater than minimum amount precision of ' + self.number_to_string(market['precision']['amount']))
-# ccxt.base.errors.InvalidOrder: binanceus amount of SOL/USDT must be greater than minimum amount precision of 2
 def initMovAvg(exchange, symbol, timeframes, logging, bought):
   symbols = createSymbols(symbol)
   averages = start(exchange, symbol, timeframes)
@@ -35,11 +18,11 @@ def initMovAvg(exchange, symbol, timeframes, logging, bought):
   elif bought and averages[0] < averages[2] and averages[1] < averages[2]:
     if exchange.has['createMarketOrder']:
       amount = getBalance(exchange, symbols[0]) # ^ need to get the amount of SOL to see how much to sell
-      orderbook = exchange.fetch_order_book (symbol)
-      print(orderbook)
-      bid = orderbook['bids'][0][0] if len (orderbook['bids']) > 0 else None
-      print(bid)
-      order = exchange.createLimitSellOrder(symbol, amount, bid, params = {})
+      # orderbook = exchange.fetch_order_book (symbol)
+      # print(orderbook)
+      # bid = orderbook['bids'][0][0] if len (orderbook['bids']) > 0 else None
+      # print(bid)
+      order = exchange.createMarketSellOrder(symbol, amount, params = {})
       print(order)
       bought = False
       logging.info('Sold: %s', order)
