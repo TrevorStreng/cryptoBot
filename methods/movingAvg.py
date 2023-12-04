@@ -18,6 +18,8 @@
 #     raise InvalidOrder(self.id + ' amount of ' + market['symbol'] + ' must be greater than minimum amount precision of ' + self.number_to_string(market['precision']['amount']))
 # ccxt.base.errors.InvalidOrder: binanceus amount of SOL/USDT must be greater than minimum amount precision of 2
 
+# *Im thinking that the amount im requesting to trade is more than available balance
+
 def initMovAvg(exchange, symbol, timeframes, logging, bought):
   symbols = createSymbols(symbol)
   averages = start(exchange, symbol, timeframes)
@@ -33,7 +35,11 @@ def initMovAvg(exchange, symbol, timeframes, logging, bought):
       order = exchange.createLimitBuyOrder(symbol, amount, ask, params = {})
       # print(order)
       bought = True
-      logging.info('Bought: ', order) # & Make sure to log price and amount bought
+      logging.info('Bought: %s', order) # & Make sure to log price and amount bought
+      logging.info('amount bought: %s', amount)
+      logging.info('balance before: %s', bal1)
+      logging.info('ask: %s', ask)
+      logging.info('ask: %s', order)
   elif bought and averages[0] < averages[2] and averages[1] < averages[2]:
     if exchange.has['createMarketOrder']:
       amount = getBalance(exchange, symbols[0]) # ^ need to get the amount of SOL to see how much to sell
@@ -45,6 +51,8 @@ def initMovAvg(exchange, symbol, timeframes, logging, bought):
       print(order)
       bought = False
       logging.info('Sold: %s', order)
+      logging.info('amount: %s', amount)
+      logging.info('ask: %s', order)
   else:
     print('didnt buy or sell')
     logging.info('Nothing happened')
