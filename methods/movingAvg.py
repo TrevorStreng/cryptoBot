@@ -19,18 +19,20 @@
 # ccxt.base.errors.InvalidOrder: binanceus amount of SOL/USDT must be greater than minimum amount precision of 2
 
 # *Im thinking that the amount im requesting to trade is more than available balance
+# ^buy order seems to work sometimes
 
 def initMovAvg(exchange, symbol, timeframes, logging, bought):
   symbols = createSymbols(symbol)
   averages = start(exchange, symbol, timeframes)
   if not bought and averages[0] > averages[2] and averages[1] > averages[2]:
     if exchange.has['createMarketOrder']:
-      bal1 = getBalance(exchange, symbols[1]) # ^ need to get the amount of usdt to see how much SOL to buy
+      bal1 = float(getBalance(exchange, symbols[1])) # ^ need to get the amount of usdt to see how much SOL to buy
       orderbook = exchange.fetch_order_book (symbol)
       # print(orderbook)
-      ask = orderbook['asks'][0][0] if len (orderbook['asks']) > 0 else None
+      ask = float(orderbook['asks'][0][0] if len (orderbook['asks']) > 0 else None)
       # print(ask)
-      amount = bal1 / ask # amount that I want to buy
+      # amount = bal1 / ask # amount that I want to buy
+      amount = round(bal1 / ask, 2)
       print('amount: %s', amount)
       order = exchange.createLimitBuyOrder(symbol, amount, ask, params = {})
       # print(order)
@@ -39,10 +41,10 @@ def initMovAvg(exchange, symbol, timeframes, logging, bought):
       logging.info('amount bought: %s', amount)
       logging.info('balance before: %s', bal1)
       logging.info('ask: %s', ask)
-      logging.info('ask: %s', order)
+      logging.info('order: %s', order)
   elif bought and averages[0] < averages[2] and averages[1] < averages[2]:
     if exchange.has['createMarketOrder']:
-      amount = getBalance(exchange, symbols[0]) # ^ need to get the amount of SOL to see how much to sell
+      amount = float(round(getBalance(exchange, symbols[0]),2)) # ^ need to get the amount of SOL to see how much to sell
       # orderbook = exchange.fetch_order_book (symbol)
       # print(orderbook)
       # bid = orderbook['bids'][0][0] if len (orderbook['bids']) > 0 else None
@@ -52,7 +54,6 @@ def initMovAvg(exchange, symbol, timeframes, logging, bought):
       bought = False
       logging.info('Sold: %s', order)
       logging.info('amount: %s', amount)
-      logging.info('ask: %s', order)
   else:
     print('didnt buy or sell')
     # logging.info('Nothing happened')
