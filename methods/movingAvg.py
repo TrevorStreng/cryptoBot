@@ -28,10 +28,7 @@ def initMovAvg(exchange, symbol, timeframes, logging, bought):
     if exchange.has['createMarketOrder']:
       bal1 = float(getBalance(exchange, symbols[1])) # ^ need to get the amount of usdt to see how much SOL to buy
       orderbook = exchange.fetch_order_book (symbol)
-      # print(orderbook)
       ask = float(orderbook['asks'][0][0] if len (orderbook['asks']) > 0 else None)
-      # print(ask)
-      # amount = bal1 / ask # amount that I want to buy
       amount = round(bal1 / ask, 2)
       print('amount: %s', amount)
       order = exchange.createLimitBuyOrder(symbol, amount, ask, params = {})
@@ -45,10 +42,6 @@ def initMovAvg(exchange, symbol, timeframes, logging, bought):
   elif bought and averages[0] < averages[2] and averages[1] < averages[2]:
     if exchange.has['createMarketOrder']:
       amount = float(round(getBalance(exchange, symbols[0]),2)) # ^ need to get the amount of SOL to see how much to sell
-      # orderbook = exchange.fetch_order_book (symbol)
-      # print(orderbook)
-      # bid = orderbook['bids'][0][0] if len (orderbook['bids']) > 0 else None
-      # print(bid)
       order = exchange.createMarketSellOrder(symbol, amount, params = {})
       print(order)
       bought = False

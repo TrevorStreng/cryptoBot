@@ -45,10 +45,10 @@ def startTrading():
   dates = date.today()
   logging.info('Date: %s/%s/%s', dates.month, dates.day, dates.year)
   symbols = createSymbols(symbol)
-  bought = checkBought(symbols[1])
   print(bought)
   while(True):
     print('running at time:', timer)
+    bought = checkBought(symbols[1])
     initMovAvg(exchange, symbol, timeframes, logging, bought)
     time.sleep(1 * 60)
     timer += 1
