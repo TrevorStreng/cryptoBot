@@ -52,7 +52,7 @@ def startTrading():
     initMovAvg(exchange, symbol, timeframes, logging, bought)
     time.sleep(1 * 60)
     timer += 1
-    if timer >= 60:
+    if timer >= 60 * 5:
       break
 logging.shutdown()
 

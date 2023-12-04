@@ -1,0 +1,27 @@
+2023-10-29 16:05:23,341 [INFO]: Date: 10/29/2023
+2023-10-29 16:05:49,450 [INFO]: Sold: 
+2023-10-30 20:06:34,669 [INFO]: Date: 10/30/2023
+2023-10-30 20:07:00,780 [INFO]: Bought: 
+2023-12-04 12:19:24,071 [INFO]: Date: 12/4/2023
+2023-12-04 12:19:41,013 [INFO]: Nothing happened
+2023-12-04 12:23:34,611 [INFO]: Date: 12/4/2023
+2023-12-04 12:23:51,529 [INFO]: Nothing happened
+2023-12-04 12:24:19,530 [INFO]: Date: 12/4/2023
+2023-12-04 12:24:36,452 [INFO]: Nothing happened
+2023-12-04 12:25:36,606 [INFO]: Nothing happened
+2023-12-04 12:26:36,907 [INFO]: Nothing happened
+2023-12-04 12:27:37,204 [INFO]: Nothing happened
+2023-12-04 12:28:37,356 [INFO]: Nothing happened
+2023-12-04 12:29:37,706 [INFO]: Nothing happened
+2023-12-04 12:30:37,908 [INFO]: Nothing happened
+2023-12-04 12:31:38,099 [INFO]: Nothing happened
+2023-12-04 12:32:38,287 [INFO]: Nothing happened
+2023-12-04 12:33:38,485 [INFO]: Nothing happened
+2023-12-04 12:34:38,669 [INFO]: Nothing happened
+2023-12-04 12:35:38,832 [INFO]: Nothing happened
+2023-12-04 12:36:39,030 [INFO]: Nothing happened
+2023-12-04 12:37:39,220 [INFO]: Nothing happened
+2023-12-04 12:38:22,333 [INFO]: Date: 12/4/2023
+2023-12-04 12:53:50,427 [INFO]: Sold: {'info': {'symbol': 'SOLUSDT', 'orderId': '456393589', 'orderListId': '-1', 'clientOrderId': 'x-R4BD3S82b6a3c350705ca25e684752', 'transactTime': '1701723230378', 'price': '0.00000000', 'origQty': '2.82000000', 'executedQty': '2.82000000', 'cummulativeQuoteQty': '174.24780000', 'status': 'FILLED', 'timeInForce': 'GTC', 'type': 'MARKET', 'side': 'SELL', 'workingTime': '1701723230378', 'fills': [{'price': '61.79000000', 'qty': '2.82000000', 'commission': '0.00429403', 'commissionAsset': 'BNB', 'tradeId': '8907440'}], 'selfTradePreventionMode': 'EXPIRE_MAKER'}, 'id': '456393589', 'clientOrderId': 'x-R4BD3S82b6a3c350705ca25e684752', 'timestamp': 1701723230378, 'datetime': '2023-12-04T20:53:50.378Z', 'lastTradeTimestamp': 1701723230378, 'lastUpdateTimestamp': 1701723230378, 'symbol': 'SOL/USDT', 'type': 'market', 'timeInForce': 'GTC', 'postOnly': False, 'reduceOnly': None, 'side': 'sell', 'price': 61.79, 'triggerPrice': None, 'amount': 2.82, 'cost': 174.2478, 'average': 61.79, 'filled': 2.82, 'remaining': 0.0, 'status': 'closed', 'fee': {'currency': None, 'cost': None, 'rate': None}, 'trades': [{'info': {'price': '61.79000000', 'qty': '2.82000000', 'commission': '0.00429403', 'commissionAsset': 'BNB', 'tradeId': '8907440'}, 'timestamp': None, 'datetime': None, 'symbol': 'SOL/USDT', 'id': '8907440', 'order': None, 'type': None, 'side': None, 'takerOrMaker': None, 'price': 61.79, 'amount': 2.82, 'cost': 174.2478, 'fee': {'cost': 0.00429403, 'currency': 'BNB'}, 'fees': [{'cost': 0.00429403, 'currency': 'BNB'}]}], 'fees': [{'currency': 'BNB', 'cost': 0.00429403}], 'stopPrice': None, 'takeProfitPrice': None, 'stopLossPrice': None}
+2023-12-04 12:53:50,428 [INFO]: amount: 2.82
+2023-12-04 12:53:50,429 [INFO]: ask: {'info': {'symbol': 'SOLUSDT', 'orderId': '456393589', 'orderListId': '-1', 'clientOrderId': 'x-R4BD3S82b6a3c350705ca25e684752', 'transactTime': '1701723230378', 'price': '0.00000000', 'origQty': '2.82000000', 'executedQty': '2.82000000', 'cummulativeQuoteQty': '174.24780000', 'status': 'FILLED', 'timeInForce': 'GTC', 'type': 'MARKET', 'side': 'SELL', 'workingTime': '1701723230378', 'fills': [{'price': '61.79000000', 'qty': '2.82000000', 'commission': '0.00429403', 'commissionAsset': 'BNB', 'tradeId': '8907440'}], 'selfTradePreventionMode': 'EXPIRE_MAKER'}, 'id': '456393589', 'clientOrderId': 'x-R4BD3S82b6a3c350705ca25e684752', 'timestamp': 1701723230378, 'datetime': '2023-12-04T20:53:50.378Z', 'lastTradeTimestamp': 1701723230378, 'lastUpdateTimestamp': 1701723230378, 'symbol': 'SOL/USDT', 'type': 'market', 'timeInForce': 'GTC', 'postOnly': False, 'reduceOnly': None, 'side': 'sell', 'price': 61.79, 'triggerPrice': None, 'amount': 2.82, 'cost': 174.2478, 'average': 61.79, 'filled': 2.82, 'remaining': 0.0, 'status': 'closed', 'fee': {'currency': None, 'cost': None, 'rate': None}, 'trades': [{'info': {'price': '61.79000000', 'qty': '2.82000000', 'commission': '0.00429403', 'commissionAsset': 'BNB', 'tradeId': '8907440'}, 'timestamp': None, 'datetime': None, 'symbol': 'SOL/USDT', 'id': '8907440', 'order': None, 'type': None, 'side': None, 'takerOrMaker': None, 'price': 61.79, 'amount': 2.82, 'cost': 174.2478, 'fee': {'cost': 0.00429403, 'currency': 'BNB'}, 'fees': [{'cost': 0.00429403, 'currency': 'BNB'}]}], 'fees': [{'currency': 'BNB', 'cost': 0.00429403}], 'stopPrice': None, 'takeProfitPrice': None, 'stopLossPrice': None}
