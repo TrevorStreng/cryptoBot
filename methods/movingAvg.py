@@ -30,7 +30,7 @@ def initMovAvg(exchange, symbol, timeframes, logging, bought):
       orderbook = exchange.fetch_order_book (symbol)
       ask = float(orderbook['asks'][0][0] if len (orderbook['asks']) > 0 else None)
       amount = round(bal1 / ask, 2)
-      print('amount: %s', amount)
+      print('amount: ', amount)
       order = exchange.createLimitBuyOrder(symbol, amount, ask, params = {})
       # print(order)
       bought = True
@@ -69,7 +69,7 @@ def start(exchange, symbol, timeframes):
   i = 0
   total = 0
   closes = [day[4] for day in days[-timeframes[(len(timeframes)-1)]:]]
-  print(closes)
+  # print(closes)
   return calcAvg(closes, timeframes)
 
 # 5.
@@ -84,6 +84,6 @@ def calcAvg(closes, timeframes):
       averages.append(total / timeframes[i])
       i += 1
     cnt += 1
-  print(averages)
+  # print(averages)
   return averages
   

@@ -48,7 +48,7 @@ def startTrading():
   bought = checkBought(symbols[0])
   print(bought)
   while(True):
-    print('running at time:', timer)
+    # print('running at time:', timer)
     bought = initMovAvg(exchange, symbol, timeframes, logging, bought)
     time.sleep(1 * 60)
     timer += 1
