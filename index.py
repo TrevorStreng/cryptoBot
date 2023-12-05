@@ -45,7 +45,7 @@ def startTrading():
   dates = date.today()
   logging.info('Date: %s/%s/%s', dates.month, dates.day, dates.year)
   symbols = createSymbols(symbol)
-  bought = checkBought(symbols[0])
+  bought = checkBought(symbols[1])
   print(bought)
   while(True):
     # print('running at time:', timer)
@@ -57,6 +57,6 @@ def startTrading():
 logging.shutdown()
 
 def checkBought(symb):
-  return getBalance(exchange, symb) > 5
+  return getBalance(exchange, symb) < 5
 
 startTrading()
