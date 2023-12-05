@@ -50,6 +50,7 @@ def initMovAvg(exchange, symbol, timeframes, logging, bought):
   else:
     print('didnt buy or sell')
     # logging.info('Nothing happened')
+  return bought
 
 # 2.
 def createSymbols(symbol):
