@@ -1,3 +1,4 @@
+import math
 # 1.
 # ! Still gettng precision error
 # amount: %s 0.0057042493744787325
@@ -42,11 +43,15 @@ def initMovAvg(exchange, symbol, timeframes, logging, bought):
       logging.info('order: %s', order)
   elif bought and averages[0] < averages[2] and averages[1] < averages[2]:
     if exchange.has['createMarketOrder']:
-      amount = float(round(getBalance(exchange, symbols[0]),2)) # ^ need to get the amount of SOL to see how much to sell
+      # amount = float(round(getBalance(exchange, symbols[0]),2)) # ^ need to get the amount of SOL to see how much to sell
+      amount = getBalance(exchange, symbols[0])
+      print('amount: ', amount)
+      print('amount: ', float(math.floor(amount * 100) / 100))
       order = exchange.createMarketSellOrder(symbol, amount, params = {})
       print(order)
       bought = False
       logging.info('Sold: %s', order)
+      print('sold')
       logging.info('amount: %s', amount)
   else:
     print('didnt buy or sell')
