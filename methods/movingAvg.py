@@ -29,7 +29,8 @@ def initMovAvg(exchange, symbol, timeframes, logging, bought):
       bal1 = float(getBalance(exchange, symbols[1])) # ^ need to get the amount of usdt to see how much SOL to buy
       orderbook = exchange.fetch_order_book (symbol)
       ask = float(orderbook['asks'][0][0] if len (orderbook['asks']) > 0 else None)
-      amount = round(bal1 / ask, 2)
+      # amount = round(bal1 / ask, 2)
+      amount = round(bal1 / ask, 2) if round(bal1 / ask, 2) > 0.01 else 0.01  # Ensure the minimum trade amount is met
       print('amount: ', amount)
       order = exchange.createLimitBuyOrder(symbol, amount, ask, params = {})
       # print(order)
