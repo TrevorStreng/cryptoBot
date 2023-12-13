@@ -7,6 +7,7 @@ from methods.movingAvg import getBalance
 from methods.movingAvg import createSymbols 
 import logging
 from datetime import date
+from methods.decisionTree import initDT
 
 # TODO
 # 1. get correct amount after trade and keep track of how much capital you have
@@ -59,4 +60,5 @@ logging.shutdown()
 def checkBought(symb):
   return getBalance(exchange, symb) < 5
 
-startTrading()
+# startTrading()
+initDT(exchange, symbol, bought)
