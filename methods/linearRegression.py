@@ -11,7 +11,7 @@ import matplotlib.dates as mdates
 # & pink is used for steps
 
 
-def initDT(exchange,symbols, bought):
+def initLR(exchange,symbols, bought):
   # ohlcv = exchange.fetch_ohlcv(symbol, timeframe) #! need to set timeframe
   df = pd.read_csv('./methods/SOL-USD.csv')
   df['Date'] = pd.to_datetime(df['Date'])
